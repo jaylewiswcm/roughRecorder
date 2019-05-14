@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="495.791" height="84.865" viewBox="0 0 495.791 84.865">
+  <g id="Group_285" data-name="Group 285" transform="translate(-141.734 -675.563)">
+    <path id="Path_717" data-name="Path 717" d="M0,0H495.791V49.981H0Z" transform="translate(141.734 710.447)" fill="#9bc8f0"/>
+    <g id="Path_717-2" data-name="Path 717" transform="translate(234 675.562)" fill="#e5446d">
+      <path d="M 310.2656555175781 35.64258193969727 L 1.500020861625671 35.64258193969727 L 1.500020861625671 1.49999737739563 L 310.2656555175781 1.49999737739563 L 310.2656555175781 35.64258193969727 Z" stroke="none"/>
+      <path d="M 2.999969482421875 2.999996185302734 L 2.999969482421875 34.14258193969727 L 308.7655944824219 34.14258193969727 L 308.7655944824219 2.999996185302734 L 2.999969482421875 2.999996185302734 M -3.0517578125e-05 -3.814697265625e-06 L 311.7655944824219 -3.814697265625e-06 L 311.7655944824219 37.14258193969727 L -3.0517578125e-05 37.14258193969727 L -3.0517578125e-05 -3.814697265625e-06 Z" stroke="none" fill="#001f3f"/>
+    </g>
+    <text id="Select_A_Track" data-name="Select A Track" transform="translate(326.001 681.775)" fill="#fff" font-size="17" font-family="MagicalMysteryTour, Magical Mystery Tour"><tspan x="0" y="19">Select A Track</tspan></text>
+    <path id="Path_719" data-name="Path 719" d="M19875.375,24113.367h493.779" transform="translate(-19732 -23402)" fill="none" stroke="#001f3f" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500.297" height="84.865" viewBox="0 0 500.297 84.865">
+  <g id="one" transform="translate(-141.734 -675.563)">
+    <path id="Path_717" data-name="Path 717" d="M0,0H500.2V49.98H0Z" transform="translate(141.734 710.447)" fill="#9bc8f0"/>
+    <g id="Path_717-2" data-name="Path 717" transform="translate(234.639 675.562)" fill="#e5446d">
+      <path d="M 312.4247436523438 35.64258193969727 L 1.499996781349182 35.64258193969727 L 1.499996781349182 1.49999737739563 L 312.4247436523438 1.49999737739563 L 312.4247436523438 35.64258193969727 Z" stroke="none"/>
+      <path d="M 3 2.999996185302734 L 3 34.14258193969727 L 310.9247436523438 34.14258193969727 L 310.9247436523438 2.999996185302734 L 3 2.999996185302734 M 0 -3.814697265625e-06 L 313.9247436523438 -3.814697265625e-06 L 313.9247436523438 37.14258193969727 L 0 37.14258193969727 L 0 -3.814697265625e-06 Z" stroke="none" fill="#001f3f"/>
+    </g>
+    <text id="Select_A_Track" data-name="Select A Track" transform="translate(327.277 681.775)" fill="#fff" font-size="17" font-family="MagicalMysteryTour, Magical Mystery Tour"><tspan x="0" y="19">Select A Track</tspan></text>
+    <path id="Path_719" data-name="Path 719" d="M19875.375,24113.367h500.2" transform="translate(-19733.641 -23402)" fill="none" stroke="#001f3f" stroke-width="3"/>
+    <path id="Path_720" data-name="Path 720" d="M20760.531,24323.549v49.877" transform="translate(-20120 -23613)" fill="none" stroke="#001f3f" stroke-width="3"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80.004" height="80.004" viewBox="0 0 80.004 80.004">
+  <g id="Group_241" data-name="Group 241" transform="translate(-305 -242)">
+    <g id="Ellipse_58" data-name="Ellipse 58" transform="translate(305 242)" fill="#fff" stroke="#f03a47" stroke-width="4">
+      <circle cx="40.002" cy="40.002" r="40.002" stroke="none"/>
+      <circle cx="40.002" cy="40.002" r="38.002" fill="none"/>
+    </g>
+    <path id="Path_621" data-name="Path 621" d="M13,0h3.017a13,13,0,0,1,13,13V40.734a13,13,0,0,1-13,13H13a13,13,0,0,1-13-13V13A13,13,0,0,1,13,0Z" transform="translate(330.492 254.746)" fill="#f03a47"/>
+    <g id="Group_225" data-name="Group 225" transform="translate(-0.002 -3)">
+      <g id="Group_240" data-name="Group 240">
+        <rect id="Rectangle_112" data-name="Rectangle 112" width="10.747" height="4.299" rx="2" transform="translate(351.988 270.643)" fill="#fff"/>
+        <rect id="Rectangle_117" data-name="Rectangle 117" width="10.747" height="4.299" rx="2" transform="translate(327.27 270.643)" fill="#fff"/>
+        <rect id="Rectangle_113" data-name="Rectangle 113" width="10.747" height="4.299" rx="2" transform="translate(351.988 278.166)" fill="#fff"/>
+        <rect id="Rectangle_116" data-name="Rectangle 116" width="10.747" height="4.299" rx="2" transform="translate(327.27 278.166)" fill="#fff"/>
+        <rect id="Rectangle_114" data-name="Rectangle 114" width="10.747" height="4.299" rx="2" transform="translate(351.988 284.613)" fill="#fff"/>
+        <rect id="Rectangle_118" data-name="Rectangle 118" width="10.747" height="4.299" rx="2" transform="translate(327.27 284.613)" fill="#fff"/>
+        <rect id="Rectangle_115" data-name="Rectangle 115" width="10.747" height="4.299" rx="2" transform="translate(351.988 291.063)" fill="#fff"/>
+        <rect id="Rectangle_119" data-name="Rectangle 119" width="10.747" height="4.299" rx="2" transform="translate(327.27 291.063)" fill="#fff"/>
+        <rect id="Rectangle_120" data-name="Rectangle 120" width="8.922" height="4.299" rx="2" transform="translate(344.465 304.71) rotate(90)" fill="#fff"/>
+        <rect id="Rectangle_121" data-name="Rectangle 121" width="8.922" height="4.299" rx="2" transform="translate(349.838 304.71) rotate(90)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

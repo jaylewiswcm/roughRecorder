@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+  
+  <title>Library</title>
+</head>
+<body>
+    <div class="header">
+        <img class="logo" src="../assets/logo.png"> </img>
+        <div class="navbarIn">
+            <nav class="library-nav"></nav>
+              <ul>
+                  <li><a href="/">home</a></li>
+                  <li><a href="/library" class="library-active">library</a></li>
+                  <li><a href="/about">about</a></li>
+                  <li><a href="/account">account</a></li>
+              </ul>
+            </nav>
+          </div>
+    
+
+      <div id="library-con">
+          <div class="column songs">
+            <h1 class="library-titles">Songs</h1>
+
+            <!-- <ul class="projects">
+                <% for(var i=0; i<projects.length; i++) {%>
+                  <li class="project">
+                    <span onClick="openProj()"><%= projects[i].title %></span>
+                    <span><%= projects[i].lyrics %></span>
+                  </li>
+                <% } %>
+              </ul> -->
+
+
+              <div id="scrolltable">
+                  <table>
+                      
+                      <tr><td class="row-pad" onClick="openProj()"></td></tr>
+                      <tr><td class="row-2nd">Track wave</td></tr>
+                     
+                      
+                  </table>
+              </div>
+
+
+          </div>
+          <div class="column tabs">
+              <h1 class="library-titles">Tabs</h1>
+          </div>
+          <div class="column lyrics">
+              <h1 class="library-titles">Lyrics</h1>
+              <div id="lyric-background">
+                
+                  <p class="lyricP"> 
+                  
+                  </p>   
+
+                  
+                 
+                </div>
+          </div>
+        </div>
+     
+       
+      <script src="https://unpkg.com/wavesurfer.js"></script>
+      <script type="text/javascript" src="/js/script.js"></script>
+   
+</body>
+</html>

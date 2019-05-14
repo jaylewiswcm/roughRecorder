@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700"
+      rel="stylesheet"
+    />
+    <link
+      href="https://www.1001fonts.com/magical-mystery-tour-font.html"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="navbar">
+      <nav>
+        <ul>
+          <li><a href="/routes/recording.html">home</a></li>
+          <li><a href="/routes/library.html">library</a></li>
+          <li><a href="/routes/about.html">about</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div id="landing-con">
+      <img id="landing-logo" src="./assets/home-logo.png" />
+    </div>
+    <div class="form-wrapper">
+      <ul class="form-title">
+        <li id="sign-in">
+          <button id="sign-btn" onclick="signClick()">Sign In</button>
+        </li>
+        <li id="register">
+          <button id="reg-btn" onclick="regClick()">Register</button>
+        </li>
+      </ul>
+      <div id="signin-box">
+        <form id="sigin-form">
+          <label for="email">Email</label>
+          <br />
+          <input type="text" name="email" />
+          <br />
+          <label for="password">Password</label>
+          <br />
+          <input type="password" name="password" />
+          <input
+            type="submit"
+            value="Submit"
+            id="sign-submit"
+            onClick="pageChange()"
+          />
+        </form>
+        <form id="register-form">
+          <label for="name">Full Name</label>
+          <br />
+          <input type="text" name="name" class="reg" />
+
+          <label for="email" id="reg-email">Email</label>
+
+          <input type="text" name="email" class="reg" />
+          <br />
+          <label for="password">Password</label>
+          <br />
+          <input type="password" name="password" class="reg" />
+          <br />
+          <label for="secondPassword" id="reg-conPas">Confirm Password</label>
+          <input
+            type="password"
+            name="secondPassword"
+            class="reg secondPassword"
+          />
+          <input type="submit" value="Submit" id="reg-submit" />
+        </form>
+      </div>
+    </div>
+    <script type="text/javascript" src="/js/script.js"></script>
+  </body>
+</html>
