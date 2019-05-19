@@ -206,4 +206,6 @@ app.get("/account", (req, res) => {
   res.sendFile(__dirname + "/pages/account.html");
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(process.env.PORT || port, () =>
+  console.log(`Listening on port ${port}!`)
+);
