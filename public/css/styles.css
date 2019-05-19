@@ -10,7 +10,7 @@ nav {
   float: right;
   width: 250px;
   margin-top: -240px;
-  margin-right: 100px;
+  margin-right: 200px;
 
   z-index: 5;
 }
@@ -27,12 +27,24 @@ li a {
 
   padding-left: 20px;
 
-  color: white;
+  color: rgba(0, 31, 63, 0.7);
 
-  font-size: 18px;
-  font-weight: 400;
+  font-family: "Magical Mystery Tour";
+  font-size: 20px;
+  font-weight: 100;
+  letter-spacing: 1.5px;
 
   text-decoration: none;
+}
+
+li a:hover {
+  color: rgba(255, 255, 255, 0.4);
+}
+.active {
+  color: white;
+}
+.active:hover {
+  color: white;
 }
 
 #landing-con {
@@ -307,20 +319,21 @@ input[type="submit"] {
   padding: 5px;
   padding-bottom: 3px;
   padding-right: 2px;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 200;
   font-family: "Magical Mystery Tour";
 
   z-index: 5;
-  margin-left: 0;
+  margin-left: -2px;
   margin-top: -7px;
   width: 160px;
   /* margin-top: 40px; */
 }
 #proj-name::placeholder {
   opacity: 0.6;
-  color: white;
-  font-size: 17px;
+  /* color: white; */
+  color: rgba(0, 31, 63, 0.7);
+  font-size: 20px;
   font-weight: 400;
   font-family: "Magical Mystery Tour";
 }
@@ -982,20 +995,19 @@ td {
 
 .library-active {
   background: url(/assets/libraryBack.svg) no-repeat;
-  background-size: 125px 28px;
+  background-size: 128px 37px;
+  background-position-y: 2px;
+  background-position-x: 7px;
   width: 200px;
   height: 300px;
 
   padding-top: 4px;
   padding-left: 35px;
+  padding-right: 10px;
   margin-top: -4px;
   margin-left: 10px;
   margin-right: -120px;
   margin-bottom: -250px;
-}
-
-.library-nav {
-  margin-right: 148px;
 }
 
 #array-content {
@@ -1140,6 +1152,7 @@ td {
   border-right: 3px #001f3f solid;
   border-left: 3px #001f3f solid;
   border: 3px #001f3f solid;
+  background: rgba(0, 31, 63, 0.7);
 
   z-index: 5;
   height: 70px;
@@ -1228,7 +1241,7 @@ td {
 #lyricP {
   width: 240px;
   height: 450px;
-  margin-top: 22px;
+  margin-top: 42px;
   margin-left: 5px;
   background: none;
   line-height: 17px;

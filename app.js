@@ -1,11 +1,17 @@
 const express = require("express"),
   http = require("http");
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const axios = require("axios");
+const multer = require("multer");
+const mongoose = require("mongoose");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
+const methodOveride = require("method-override");
+
 const app = express();
 const server = http.Server(app);
-const io = require("socket.io")(server);
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const multer = require("multer");
-const axios = require("axios");
+// var bcrypt = require("bcrypt");
+// var session = require("express-session");
 
 const MongoClient = require("mongodb").MongoClient;
 const bodyParser = require("body-parser");
@@ -14,7 +20,11 @@ const port = 5000;
 
 const Project = require("./models/Project");
 const User = require("./models/User");
-const Track = require("./models/Track");
+
+app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json());
+app.use(methodOveride("_method"));
 
 const url = "mongodb://jay:jay123@ds145346.mlab.com:45346/projects";
 var mLab = require("mongolab-data-api")("p-3QMFKwkIzCwu37_tCaB4YS7Rkro96v");
@@ -22,28 +32,48 @@ var mLab = require("mongolab-data-api")("p-3QMFKwkIzCwu37_tCaB4YS7Rkro96v");
 // Database Name
 const dbName = "projects";
 
-app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-app.use(bodyParser.json());
-// bodyParser = {
-//   json: {limit: '50mb', extended: true},
-//   urlencoded: {limit: '50mb', extended: true}
-// };
+const conn = mongoose.createConnection(url);
 
-// app.use(bodyParser.urlencoded({ extended: false }))
-// app.use(bodyParser.json())
-// MongoClient.connect(url, { useNewUrlParser: true })
-//   .then(client => {
-//     // if (err) return console.log(err);
-//     db = client.db(dbName);
-//     const userCol = db.collection("users");
-//     return userCol
-//       .find({})
-//       .limit(1)
-//       .toArray();
+let gfs;
+
+conn.once("open", () => {
+  //Init stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
+// Create storage engine
+const storage = new GridFsStorage({
+  url: url,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "uploads"
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
+const upload = multer({ storage });
+
+// app.use(
+//   session({
+//     secret: "work hard",
+//     resave: true,
+//     saveUninitialized: false
 //   })
-//   .then(res => console.log("Connected to Users Collection"))
-//   .catch(err => console.log(err));
+// );
+
+// var routes = require("./routes/login");
+// app.use("/", routes);
 
 MongoClient.connect(url, { useNewUrlParser: true })
   .then(client => {
@@ -56,40 +86,44 @@ MongoClient.connect(url, { useNewUrlParser: true })
       .limit(1)
       .toArray();
   })
-  .then(res => console.log("Connected to Project Collection"))
+  .then(res => console.log("Connected to mLab"))
   .catch(err => console.log(err));
 
-app.post("/users", (req, res) => {
-  if (
-    req.body.email &&
-    req.body.username &&
-    req.body.password &&
-    req.body.password2
-  ) {
-    const newUser = new User({
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password
-    });
+//This is the start attempt of user accounts implementation
+// app.post("/users", (req, res) => {
+//   if (req.body.password !== req.body.password2) {
+//     var err = new Error("Passwords do not match");
+//     err.status = 400;
+//     res.send("passwords do not match");
+//     return err;
+//   }
+//   const newUser = new User({
+//     email: req.body.email,
+//     username: req.body.username,
+//     // password: bcrypt.hashSync(req.body.password, 10)
+//     password: req.body.password
+//   });
 
-    db.collection("users").insertOne(newUser, (err, result) => {
-      if (err) return console.log(err);
-
-      console.log("Saved to database");
-      res.redirect("/login");
-    });
-
-    console.log(newUser);
-  }
-  console.log("newUser");
-});
-
-var heldProject = {
-  title: "",
-  lyrics: "",
-  tracks: "",
-  tabs: ""
-};
+//   // console.log(newUser);
+//   db.collection("users").findOne(
+//     { email: req.body.email },
+//     { email: true },
+//     (err, result) => {
+//       if (err) return console.log(err);
+//       // console.log(result.email);
+//       if (result.email) {
+//         console.log(result.email);
+//         console.log("Already user with this email address");
+//       } else {
+//         db.collection("users").insertOne(newUser, (req, res) => {
+//           if (err) return console.log(err);
+//           console.log("Saved to database");
+//           res.redirect("/login");
+//         });
+//       }
+//     }
+//   );
+// });
 
 app.post("/projects", (req, res) => {
   const newProject = new Project({
@@ -104,77 +138,42 @@ app.post("/projects", (req, res) => {
   var lyricsVal = req.body.lyrics;
   var tracksVal = req.body.tracks;
   var tabsVal = req.body.tabs;
+  var tabsArr = [];
 
-  // console.log(newProject.title);
-  // console.log(heldProject);
+  var track = req.body.tracks;
 
-  // console.log(db.collection("user-project").find({ title: { $eq: "second" } }));
+  db.collection("user-projects").findOne(
+    { title: req.body.title },
+    { title: true },
+    (err, res) => {
+      if (res === null) {
+        console.log("No Project");
+        db.collection("user-projects").insertOne(newProject, (err, result) => {
+          if (err) return console.log(err);
 
-  // db.collection("user-projects").findOneAndUpdate(
-  //   { title: usedTitle },
-  //   {
-  //     $addToSet: {
-  //       tracks: tracksVal,
-  //       tabs: tabsVal
-  //     },
-  //     $set: {
-  //       lyrics: lyricsVal
-  //     }
-  //   },
-  //   { upsert: true },
-  //   (err, res) => {
-  //     if (err) return console.log(err);
-
-  //     console.log("Updated Project");
-  //     // res.redirect("/");
-  //   }
-  // );
-
-  // if (newProject.title === heldProject.title) {
-  //   console.log("they're the same");
-
-  //   // db.collection("user-project").update(
-  //   //   { title: usedTitle },
-  //   //   {
-  //   //     title: usedTitle,
-  //   //     lyrics: lyricsVal,
-  //   //     tracks: tracksVal,
-  //   //     tabs: tabsVal,
-  //   //     date: Date.now
-  //   //   },
-  //   //   (err, result) => {
-  //   //     if (err) return console.log(err);
-
-  //   //     console.log("Updated Project");
-  //   //     res.redirect("/");
-  //   //   }
-  //   // );
-  //   db.collection("user-projects").insertOne(newProject, (err, result) => {
-  //     if (err) return console.log(err);
-
-  //     console.log("Saved to database");
-  //     res.redirect("/");
-  //   });
-  // } else {
-  db.collection("user-projects").insertOne(newProject, (err, result) => {
-    if (err) return console.log(err);
-
-    console.log("Saved to database");
-    res.redirect("/");
-  });
-  // }
-
-  // req.body.tracks.audio;
-
-  // console.log(req.body.tabs);
-
-  heldProject = newProject;
-  // console.log("This is the newProject:   " + newProject);
-});
-
-app.post("/blob", (req, res) => {
-  // var data = JSON.stringify(res);
-  console.log("This is the blob: " + res);
+          console.log("Saved to database");
+        });
+      } else {
+        for (var i = 0; i < track.length; i++) {
+          db.collection("user-projects").updateOne(
+            { title: req.body.title },
+            {
+              $set: {
+                lyrics: req.body.lyrics
+              },
+              $addToSet: {
+                tracks: track[i]
+              }
+            },
+            (err, res) => {
+              if (err) return console.log(err);
+              console.log("Updated database");
+            }
+          );
+        }
+      }
+    }
+  );
 });
 
 app.set("view engine", "ejs");
@@ -191,37 +190,20 @@ app.get("/library", (req, res) => {
     });
 });
 
+app.get("/register", (req, res) => {
+  res.sendFile(__dirname + "/pages/register.html");
+});
 app.get("/login", (req, res) => {
-  res.sendFile(__dirname + "/routes/login.html");
+  res.sendFile(__dirname + "/pages/login.html");
 });
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/routes/recording.html");
-});
-app.get("/library", (req, res) => {
-  res.sendFile(__dirname + "/routes/library.html");
+  res.sendFile(__dirname + "/pages/recording.html");
 });
 app.get("/about", (req, res) => {
-  res.sendFile(__dirname + "/routes/about.html");
+  res.sendFile(__dirname + "/pages/about.html");
 });
 app.get("/account", (req, res) => {
-  res.sendFile(__dirname + "/routes/account.html");
+  res.sendFile(__dirname + "/pages/account.html");
 });
-
-app.post("/lyricstore", (req, res) => {
-  console.log(req.body.textarea);
-});
-
-app.get("/array", function(req, res) {
-  var Passed_value = JSON.parse(req.body);
-  console.log(Passed_value);
-});
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
-// io.on("connection", function(socket) {
-//   socket.emit("news", { hello: "world" });
-//   socket.on("my other event", function(data) {
-//     console.log(data);
-//   });
-// });
 
 app.listen(port, () => console.log(`Listening on port ${port}!`));

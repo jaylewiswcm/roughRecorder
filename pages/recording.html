@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+
+  <title>RoughRecorder</title>
+</head>
+
+<body>
+
+  <img class="logo" src="/assets/logo.png"> </img>
+  <div class="navbarIn">
+    <nav></nav>
+    <ul>
+      <li><a href="/" class="active">home</a></li>
+      <li><a href="/library">library</a></li>
+      <li><a href="/about">about</a></li>
+      <li><a href="/account">account</a></li>
+
+    </ul>
+    </nav>
+  </div>
+  <div id="name-div">
+    <input id="proj-name" form="lyr-form" name="projectName" placeholder="Project title"></input>
+    
+    <svg id="proj-svg" height="27" width="400" id="svg">
+      <line x1="3" y1="25" x2="140" y2="25" class="proj-line" />
+    </svg>
+    <h1 id="title-validation">Enter a Project Name</h1>
+  </div>
+  <div class="record-div">
+
+    <button id="record"><img id="record-icon" src="/assets/record-icon.svg"></img>
+    </button>
+    <div id="recording-waves">
+    </div>
+    <audio id="recordedAudio"></audio>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <form class="track-form">
+          <input id="trackName" value="" placeholder="Enter Track Name"></input>
+          <button class="trackSubmit">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="title-div">
+    <div class="title-column">
+      <h1 class="elm-title" id="track-title">Tracks</h1>
+    </div>
+    <div class="title-column">
+      <h1 class="elm-title" id="tab-title" onclick="showTabs()">Tabs </h1>
+
+    </div>
+
+  </div>
+
+  <div id="recording-ui">
+
+    <div class="home-column" id="tracks-left">
+
+      <div class="tracks-con">
+        <div id="track-table" name="tracks"></div>
+      </div>
+    </div>
+
+    <div class="home-column" id="tabs-right">
+
+      <div id="tab-div">
+        <svg height="910" width="600" id="svg">
+          <line x1="15" y1="17" x2="525" y2="17" class="gLine" />
+          <line x1="15" y1="47" x2="525" y2="47" class="gLine" />
+          <line x1="15" y1="80" x2="525" y2="80" class="gLine" />
+          <line x1="15" y1="112" x2="525" y2="112" class="gLine" />
+          <line x1="15" y1="144" x2="525" y2="144" class="gLine" />
+          <line x1="15" y1="176" x2="525" y2="176" class="gLine" />
+          Your browser does not support inline SVG.
+        </svg>
+        <!-- <button id="saveTab" onclick="saveTab()">Save</button> -->
+      </div>
+    </div>
+
+    <div id="lyric-con">
+      <button id="openForm" onClick="rePosLyr()"></button>
+      <button id="cross-btn" onClick="closeForm()"></button>
+      <form id="lyr-form" autocomplete="off">
+        <!-- <input type="text" name="name"></input> -->
+        <!-- <input id="lyr-sub" type="submit"></input> -->
+      </form>
+      <textarea id="lyrics" name="lyrics" value=" ">
+            </textarea>
+    </div>
+    <div id="saveDiv">
+      <div id="saveBox">
+        <h1 id="saveH1">Project Saved</h1>
+      </div>
+      <button id="saveBtn" onClick="saveProj()"><img src="../assets/save-btn.png"></img> </button>
+    </div>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <script type="text/javascript" src="/js/script.js"></script>
+  <script type="text/javascript" src="/js/recording.js"></script>
+
+
+
+</body>
+
+</html>

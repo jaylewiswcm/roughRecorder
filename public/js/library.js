@@ -24,7 +24,7 @@ $("button.proBtn").click(function() {
   var tab = this.dataset.tab;
   var tabArr = tab.split(",");
 
-  console.log(tabArr);
+  // console.log(tabArr);
   var grid = tabGrid(6, 12, function(el, row, col, i) {});
   var tabDiv = document.getElementById("tab-lines");
   tabDiv.appendChild(grid);
@@ -49,8 +49,13 @@ $("button.proBtn").click(function() {
         // if (tabArr[i] === "") {
         //   tabH1.innerHTML = " ";
         // }
-        tabH1.innerHTML = tabArr[i];
-        console.log(tabArr[i]);
+        if (tabArr[i] === undefined) {
+          tabH1.innerHTML = "";
+        } else {
+          tabH1.innerHTML = tabArr[i];
+          console.log(tabArr[i]);
+        }
+        // console.log(tabArr[i]);
         // console.log(i);
       }
     }
@@ -103,6 +108,7 @@ $("button.trackBtn").click(function(e) {
   var myaudio = [];
   var newaudio;
 
+  var btnA = [];
   for (var x = 0; x < tracksArr.length; x++) {
     var tDiv = document.createElement("div");
     tDiv.setAttribute("class", "tDiv");
@@ -171,51 +177,24 @@ $("button.trackBtn").click(function(e) {
 
     myaudio.push(newaudio);
 
-    console.log(myaudio);
-
-    // var playFnc = () => {
-    //   myaudio[x].play();
-    //   console.log(myaudio[x]);
-    //   console.log(x);
-    // };
-    // console.log(myaudio[x]);
-
     // console.log(myaudio);
-    // var playFnc = p => {
-    //   p.play();
-    //   console.log("button has been pressed");
-    // };
-    // var pauseFnc = p => {
-    //   myaudio[x].pause();
-    //   // wavesurfer.pause();
-    //   // console.log(audioURL);
-    // };
+    // console.log(x);
 
-    // playBtn.setAttribute("onclick", "playFnc()");
+    playBtn.onclick = e => {
+      var audNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
+      // console.log(audNode);
+      audNode.play();
+    };
 
-    // playBtn.onclick = myaudio => {
-    //   console.log(myaudio[x]);
-    //   myaudio[x].play();
-    // };
-
-    playBtn.onclick = playFnc(myaudio[x]);
-
-    // playBtn.onclick = () => {
-    //   myaudio.play();
-    //   console.log("Track Play");
-    //   console.log(myaudio);
-    // };
-
-    // console.log(audioURL);
-
-    // console.log(audioURL);
+    pauseBtn.onclick = e => {
+      var audNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
+      // console.log(audNode);
+      audNode.pause();
+    };
 
     modal.style.display = "block";
     modalTitle.innerHTML = title;
-    // TContent.appendChild(tracksTitle);
-    // TContent.appendChild(audio);
 
-    // console.log(tracksArr[i].audio);
     tDiv.appendChild(tracksTitle);
     tDiv.appendChild(audio);
     tDiv.appendChild(waveDiv);
@@ -226,7 +205,6 @@ $("button.trackBtn").click(function(e) {
     for (var w = 0; w < trackArray.length; w++) {
       wrapper.appendChild(trackArray[w]);
     }
-    // wrapper.appendChild(tDiv);
 
     wavesurfer = WaveSurfer.create({
       container: ".waveform2",
@@ -240,10 +218,8 @@ $("button.trackBtn").click(function(e) {
       cursorWidth: "0",
       interact: "true"
     });
-    // console.log(trackArray);
-    wavesurfer.load(audioURL);
 
-    tDiv.onclick = e => {};
+    wavesurfer.load(audioURL);
   }
 
   close.onclick = e => {
@@ -251,90 +227,5 @@ $("button.trackBtn").click(function(e) {
 
     wrapper.parentNode.removeChild(wrapper);
     trackArray = [];
-    // tDiv.parentNode.removeChild(tDiv);
   };
-
-  // $(tDiv).one("click", function() {
-  //   parentDiv.empty();
-  //   parentDiv.append(tDiv);
-  //   tDiv.removeChild(tDiv.childNodes[0]);
-  //   tDiv.removeChild(btnDiv);
-  //   // parentDiv.css("padding-top", "15px");
-  //   // parentDiv.css("height", "60px");
-
-  //   var newBtns = document.createElement("div");
-  //   var playBtn = document.createElement("button");
-  //   var pauseBtn = document.createElement("button");
-  //   var trackBtn = document.createElement("button");
-  //   var play = document.createElement("img");
-  //   var pause = document.createElement("img");
-  //   var trackLns = document.createElement("img");
-
-  //   newBtns.setAttribute("class", "songBtns");
-  //   playBtn.setAttribute("class", "func-btns");
-  //   pauseBtn.setAttribute("class", "func-btns");
-  //   trackBtn.setAttribute("class", "func-btns");
-
-  //   play.setAttribute("src", "../assets/play-blue.svg");
-  //   play.setAttribute("class", "play-icon");
-  //   pause.setAttribute("src", "../assets/pause-blue.svg");
-  //   pause.setAttribute("class", "pause-icon");
-  //   trackLns.setAttribute("src", "../assets/tracks-btn.svg");
-  //   trackLns.setAttribute("class", "tracks-icon");
-
-  //   playBtn.appendChild(play);
-  //   pauseBtn.appendChild(pause);
-  //   trackBtn.appendChild(trackLns);
-
-  //   newBtns.appendChild(playBtn);
-  //   newBtns.appendChild(pauseBtn);
-  //   newBtns.appendChild(trackBtn);
-
-  //   tDiv.appendChild(newBtns);
-  //   tDiv.style.marginTop = "15px";
-  //   tDiv.style.marginBottom = "0px";
-
-  //   modal.style.display = "none";
-  // });
-  // tDiv.onclick = e => {
-  //   parentDiv.empty();
-  //   parentDiv.append(tDiv);
-  //   tDiv.removeChild(tDiv.childNodes[0]);
-  //   tDiv.removeChild(btnDiv);
-  //   // parentDiv.css("padding-top", "15px");
-  //   // parentDiv.css("height", "60px");
-  //   var newBtns = document.createElement("div");
-  //   var playBtn = document.createElement("button");
-  //   var pauseBtn = document.createElement("button");
-  //   var trackBtn = document.createElement("button");
-  //   var play = document.createElement("img");
-  //   var pause = document.createElement("img");
-  //   var trackLns = document.createElement("img");
-  //   newBtns.setAttribute("class", "songBtns");
-  //   playBtn.setAttribute("class", "func-btns");
-  //   pauseBtn.setAttribute("class", "func-btns");
-  //   trackBtn.setAttribute("class", "func-btns");
-  //   play.setAttribute("src", "../assets/play-blue.svg");
-  //   play.setAttribute("class", "play-icon");
-  //   pause.setAttribute("src", "../assets/pause-blue.svg");
-  //   pause.setAttribute("class", "pause-icon");
-  //   trackLns.setAttribute("src", "../assets/tracks-btn.svg");
-  //   trackLns.setAttribute("class", "tracks-icon");
-  //   playBtn.appendChild(play);
-  //   pauseBtn.appendChild(pause);
-  //   trackBtn.appendChild(trackLns);
-  //   newBtns.appendChild(playBtn);
-  //   newBtns.appendChild(pauseBtn);
-  //   newBtns.appendChild(trackBtn);
-  //   tDiv.appendChild(newBtns);
-  //   tDiv.style.marginTop = "15px";
-  //   tDiv.style.marginBottom = "0px";
-  //   modal.style.display = "none";
-  // };
 });
-
-// var rows = document.getElementsByClassName("row-pad");
-// var firstRow = rows[0];
-
-// // console.log(firstRow);
-// rows[0].style.background = "none";

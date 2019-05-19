@@ -167,6 +167,7 @@ function handlerFunction(stream) {
       reader.onloadend = function() {
         base64data = reader.result;
         // console.log(base64data);
+        // var stBlob = JSON.stringify(blob);
         trackArr.push({
           name: trackName,
           audio: base64data
@@ -192,9 +193,10 @@ function handlerFunction(stream) {
         var tabVal = [];
         if (tabs.length === 0) {
           console.log("Tabs are not entered");
-          var val = document.getElementById("title-validation");
+
           // console.log(tabVal);
           if (project === "") {
+            var val = document.getElementById("title-validation");
             console.log("Error need a title");
             val.style.display = "block";
           } else {
@@ -216,7 +218,7 @@ function handlerFunction(stream) {
             })
               .then(function(response) {
                 console.log("Project Saved");
-                // Pop up box says its saved
+                // Pop up box to say its saved
                 var popBox = document.getElementById("saveBox");
                 popBox.style.display = "block";
                 setTimeout(function() {
@@ -228,6 +230,11 @@ function handlerFunction(stream) {
 
                 // Put Validation
               });
+            var popBox = document.getElementById("saveBox");
+            popBox.style.display = "block";
+            setTimeout(function() {
+              popBox.style.display = "none";
+            }, 2000);
           }
         } else {
           for (var a = 0; a < 6; a++) {
@@ -258,29 +265,17 @@ function handlerFunction(stream) {
                   "Content-Type": "multipart/form-data"
                 }
               }
-            })
-              .then(function(response) {
-                console.log("Project Saved");
-                // Pop up box says its saved
-                var popBox = document.getElementById("saveBox");
-                popBox.style.display = "block";
-                setTimeout(function() {
-                  popBox.style.display = "none";
-                }, 2000);
-              })
-              .catch(function(error) {
-                console.log(error);
-
-                // Put Validation
-              });
+            });
+            var popBox = document.getElementById("saveBox");
+            popBox.style.display = "block";
+            setTimeout(function() {
+              popBox.style.display = "none";
+            }, 2000);
           }
         }
         // console.log(trackArr);
       };
 
-      // console.log(audioChunks);
-
-      // console.log(trackArray);
       var wavesurfer = WaveSurfer.create({
         container: ".waveform",
         waveColor: "#FFFFFF",
@@ -332,7 +327,7 @@ xhr.onload = function(e) {
   var fd = new FormData();
   fd.append("name", "filename.wav");
   fd.append("file", blob);
-  xhr.open("POST", "/server", true);
+  xhr.open("POST", "/projects", true);
   xhr.send(fd);
 };
 
