@@ -32,37 +32,37 @@ var mLab = require("mongolab-data-api")("p-3QMFKwkIzCwu37_tCaB4YS7Rkro96v");
 // Database Name
 const dbName = "projects";
 
-const conn = mongoose.createConnection(url);
+// const conn = mongoose.createConnection(url);
 
-let gfs;
+// let gfs;
 
-conn.once("open", () => {
-  //Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("uploads");
-});
+// conn.once("open", () => {
+//   //Init stream
+//   gfs = Grid(conn.db, mongoose.mongo);
+//   gfs.collection("uploads");
+// });
 
-// Create storage engine
-const storage = new GridFsStorage({
-  url: url,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString("hex") + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: "uploads"
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
+// // Create storage engine
+// const storage = new GridFsStorage({
+//   url: url,
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//       crypto.randomBytes(16, (err, buf) => {
+//         if (err) {
+//           return reject(err);
+//         }
+//         const filename = buf.toString("hex") + path.extname(file.originalname);
+//         const fileInfo = {
+//           filename: filename,
+//           bucketName: "uploads"
+//         };
+//         resolve(fileInfo);
+//       });
+//     });
+//   }
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
 // app.use(
 //   session({
