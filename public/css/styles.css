@@ -284,7 +284,7 @@ input[type="submit"] {
 
 #title-validation {
   font-size: 15px;
-  margin-top: -8px;
+  margin-top: -18px;
   color: rgba(0, 31, 63, 0.7);
   background: white;
   border-radius: 45px 45px 45px 45px;
@@ -293,6 +293,7 @@ input[type="submit"] {
   text-align: center;
   padding-top: 4px;
   margin-left: -23px;
+
   width: 180px;
   display: none;
 
@@ -345,7 +346,7 @@ input[type="submit"] {
 
   z-index: 5;
   margin-left: -2px;
-  margin-top: -7px;
+  margin-top: -20px;
   width: 160px;
   /* margin-top: 40px; */
 }
@@ -395,7 +396,7 @@ input[type="submit"] {
 .logo {
   width: 150px;
   margin-left: 20px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .record-div {
@@ -529,10 +530,10 @@ input[type="submit"] {
 
 #recording-waves {
   position: absolute;
-  border-bottom: 1px solid white;
+  border-bottom: 3px solid white;
   width: 70%;
   margin-left: -30%;
-  margin-top: -50px;
+  margin-top: -52px;
 
   z-index: 1;
 }
@@ -770,6 +771,8 @@ td {
   margin-left: 18px;
   margin-top: 15px;
   display: none;
+
+  cursor: pointer;
 }
 
 /* .cross {
