@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
   <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai|Montserrat&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
-  <script src="/js/library.js" type="text/javascript" ></script>
+  <script src="/js/library.js" type="text/javascript"></script>
 
 
   <title>RoughRecorder</title>
@@ -16,7 +16,9 @@
 
 <body>
   <div class="header">
-    <img class="logo" src="../assets/logo.png"> </img>
+    <a href="/">
+      <img class="logo" src="../assets/logo.png"> </img>
+    </a>
     <div class="navbarIn">
       <nav class="library-nav"></nav>
       <ul>
@@ -40,19 +42,17 @@
               <td class="row-pad">
                 <button class="proBtn" data-lyrics="<%= projects[i].lyrics %>" data-tab="<%= projects[i].tabs %>">
                   <%=  projects[i].title%>
-               </button>
+                </button>
               </td>
             </tr>
-
             <tr class="library-row">
               <td class="row-2nd">
                 <button class="trackBtn" data-tracks="<%= JSON.stringify(projects[i].tracks) %>"
-                  data-title="<%=  projects[i].title%>" >
-                   <h1 class="selectTrack">Select a Track</h1>
+                  data-title="<%=  projects[i].title%>">
+                  <h1 class="selectTrack">Select a Track</h1>
                 </button>
-                </td>
+              </td>
             </tr>
-
             <div id="songModal" class="modal">
               <div id="track-content">
                 <h1 id="modal-title"></h1>
@@ -67,14 +67,11 @@
           </table>
         </div>
 
-
-
-
       </div>
       <div class="column" id="tabs">
         <h1 class="library-titles">Tabs</h1>
         <div id="tab-lines">
-          
+
         </div>
       </div>
       <div class="column lyrics">

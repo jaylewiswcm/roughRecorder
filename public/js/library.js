@@ -11,20 +11,18 @@ var svgCode =
   "</svg>";
 
 $("button.proBtn").click(function() {
+  // Retrieving data from the ejs file on button click
   var lyrics = this.dataset.lyrics;
-  // console.log(lyrics);
   lyricP.value = lyrics;
-  // do something with id
+
   var tabDiv = document.getElementById("tab-lines");
 
   tabDiv.innerHTML = svgCode;
-  // var tab = [];
 
-  // tab.unshift(this.dataset.tab);
   var tab = this.dataset.tab;
   var tabArr = tab.split(",");
 
-  // console.log(tabArr);
+  // Creating a table to display the tabs
   var grid = tabGrid(6, 12, function(el, row, col, i) {});
   var tabDiv = document.getElementById("tab-lines");
   tabDiv.appendChild(grid);
@@ -35,6 +33,7 @@ $("button.proBtn").click(function() {
     var grid = document.createElement("table");
     grid.className = "grid";
 
+    // Creates the table
     for (var r = 0; r < rows; ++r) {
       var tr = grid.appendChild(document.createElement("tr"));
       tr.setAttribute("class", "tabRow");
@@ -46,28 +45,20 @@ $("button.proBtn").click(function() {
         var tabH1 = document.createElement("h1");
         tabH1.setAttribute("class", "tabNums2");
         cell.appendChild(tabH1);
-        // if (tabArr[i] === "") {
-        //   tabH1.innerHTML = " ";
-        // }
+
+        // Validation: If no data the result would be undefined so changed to empty string
         if (tabArr[i] === undefined) {
           tabH1.innerHTML = "";
         } else {
+          // Passing the tab data to h1 elements
           tabH1.innerHTML = tabArr[i];
           console.log(tabArr[i]);
         }
-        // console.log(tabArr[i]);
-        // console.log(i);
       }
     }
-
     return grid;
   }
 });
-
-// const dataURItoBlob = (dataURI, callback) => {
-//   // convert base64 to raw binary data held in a string
-//   // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-// };
 
 var modal = document.getElementById("songModal");
 var modalTitle = document.getElementById("modal-title");
@@ -86,19 +77,14 @@ var playFnc = e => {
 };
 
 $("button.trackBtn").click(function(e) {
-  // button.onclick = () => {
-  // const showModal = () => {
-  // var info = e.parentNode;
-  // console.log(info);
   var parentDiv = $(this).closest(".row-2nd");
-  // console.log(parentDiv);
 
+  // Retrieving data from EJS file
   var tracks = this.dataset.tracks;
   var title = this.dataset.title;
 
-  // var tracksArr = [];
+  // Parsing the tracks data to an object
   var tracksArr = JSON.parse(tracks);
-  // console.log(tracksArr.length);
 
   var wrapper = document.createElement("div");
   wrapper.setAttribute("class", "wrapper");
@@ -109,6 +95,7 @@ $("button.trackBtn").click(function(e) {
   var newaudio;
 
   var btnA = [];
+
   for (var x = 0; x < tracksArr.length; x++) {
     var tDiv = document.createElement("div");
     tDiv.setAttribute("class", "tDiv");
@@ -116,36 +103,29 @@ $("button.trackBtn").click(function(e) {
     var tracksTitle = document.createElement("h1");
     tracksTitle.setAttribute("class", "TModal-title");
     tracksTitle.innerHTML = tracksArr[x].name;
-    // console.log(tracksArr[x]);
-    // console.log(x);
-    // Create the audio
 
+    // Converting the base64 back into a blob format
     var dataURI = tracksArr[x].audio;
     var byteString = atob(dataURI.split(",")[1]);
-
-    // separate out the mime component
+    // Separate out the mime component
     var mimeString = dataURI
       .split(",")[0]
       .split(":")[1]
       .split(";")[0];
-
-    // write the bytes of the string to an ArrayBuffer
+    // Writing the bytes of the string to an ArrayBuffer
     var ab = new ArrayBuffer(byteString.length);
     var ia = new Uint8Array(ab);
     for (var i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-
-    // write the ArrayBuffer to a blob, and you're done
+    // Writing the ArrayBuffer to a blob
     var bb = new Blob([ab], {
       type: "audio/ogg; codecs=opus"
     });
-    // console.log(bb);
 
     // Creating the audio html elements
     var audio = document.createElement("audio");
     var waveDiv = document.createElement("div");
-
     audio.setAttribute("class", "libraryClip");
     waveDiv.setAttribute("class", "waveform2");
 
@@ -177,18 +157,14 @@ $("button.trackBtn").click(function(e) {
 
     myaudio.push(newaudio);
 
-    // console.log(myaudio);
-    // console.log(x);
-
+    // Function buttons
     playBtn.onclick = e => {
+      // Getting the audio element from going through the parent and child nodes
       var audNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
-      // console.log(audNode);
       audNode.play();
     };
-
     pauseBtn.onclick = e => {
       var audNode = e.target.parentNode.parentNode.parentNode.childNodes[1];
-      // console.log(audNode);
       audNode.pause();
     };
 
@@ -200,12 +176,14 @@ $("button.trackBtn").click(function(e) {
     tDiv.appendChild(waveDiv);
     tDiv.appendChild(btnDiv);
 
+    // Adds new recording to top of array so when displayed on page
+    // wavesurfer can identify the correct class name
     var newLength = trackArray.unshift(tDiv);
-
     for (var w = 0; w < trackArray.length; w++) {
       wrapper.appendChild(trackArray[w]);
     }
 
+    // Initialising wavesurfer
     wavesurfer = WaveSurfer.create({
       container: ".waveform2",
       waveColor: "white",
@@ -218,10 +196,9 @@ $("button.trackBtn").click(function(e) {
       cursorWidth: "0",
       interact: "true"
     });
-
     wavesurfer.load(audioURL);
   }
-
+  // Closes Modal
   close.onclick = e => {
     modal.style.display = "none";
 

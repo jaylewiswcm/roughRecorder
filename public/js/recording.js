@@ -3,26 +3,19 @@ var record = document.getElementById("record");
 var soundClips = document.getElementById("track-table");
 var recordImg = document.getElementById("record-icon");
 
+// Media Recorder API - records audio from the browser
 function handlerFunction(stream) {
   var rec = new MediaRecorder(stream);
 
   record.onclick = e => {
-    // console.log("Button has been clicked");
-
+    // Changes the record icon when recording also allows the start and stop button to be the same icon
     if (Switch === 1) {
       Switch = 2;
-
       rec.start();
-      // console.log(rec.state);
-      // console.log("Started the recording");
       recordImg.src = "../assets/recording-icon.svg";
     } else if (Switch === 2) {
       Switch = 1;
-
       rec.stop();
-
-      // console.log(rec.state);
-      // console.log("Stopped the recording");
       recordImg.src = "../assets/record-icon.svg";
     }
   };
@@ -33,29 +26,34 @@ function handlerFunction(stream) {
     audioChunks.push(e.data);
   };
 
+  // To display the tracks
   var trackArray = [];
   var i = 0;
   var trackTable = document.getElementById("track-table");
-
   var trackArr = [];
   var nameProject;
-  rec.onstop = e => {
-    // console.log("Recorder stopped");
 
+  rec.onstop = e => {
+    // Once recording stops display a modal to enter the track name
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("myBtn");
     var submit = document.getElementsByClassName("trackSubmit")[0];
     var trackInput = document.getElementById("trackName");
     var projectName = document.getElementById("proj-name");
 
+    // Turned off the prediction drop down on input
     trackInput.setAttribute("autocomplete", "off");
     var project = projectName.value;
     modal.style.display = "block";
     trackInput.value = "";
 
+    // On submiting the track name create html elements to display
+    // the tracks with waveforms and function buttons
     submit.onclick = function(e) {
       e.preventDefault();
       console.log(trackInput.value);
+
+      // Validation: Track name is needed
       if (trackInput.value === "") {
         console.log("Enter a track name");
         trackInput.setAttribute("id", "trackVal");
@@ -63,8 +61,10 @@ function handlerFunction(stream) {
         trackInput.setAttribute("id", "trackName");
         modal.style.display = "none";
 
+        // Passing the trackInput value to the trackName h1
         var trackName = trackInput.value;
 
+        // Creating the html elements to display the tracks
         var trackContainer = document.createElement("article");
         var trackLabel = document.createElement("p");
         var audio = document.createElement("audio");
@@ -78,6 +78,7 @@ function handlerFunction(stream) {
         trackLabel.innerHTML = trackName;
         trackLabel.setAttribute("class", "track-label");
 
+        // Creating function buttons
         var btnDiv = document.createElement("div");
         var playBtn = document.createElement("button");
         var pauseBtn = document.createElement("button");
@@ -93,6 +94,7 @@ function handlerFunction(stream) {
         pause.setAttribute("src", "../assets/pause-icon.svg");
         pause.setAttribute("class", "pause-icon");
 
+        // Play and pause functionality
         const playFnc = e => {
           myaudio.play();
           wavesurfer.play();
@@ -118,41 +120,31 @@ function handlerFunction(stream) {
         trackContainer.appendChild(deleteButton);
         soundClips.appendChild(trackContainer);
 
+        // Creating a new blob from the captured audio
         var blob = new Blob(audioChunks, {
           type: "audio/ogg; codecs=opus"
         });
         audioChunks = [];
+        // Creating a url from the blob
         var audioURL = window.URL.createObjectURL(blob);
+        // Passing the audioURL through the audio elements src
         audio.src = audioURL;
+        // Creating the audio passing the audioURL
         var myaudio = new Audio(audioURL);
 
-        // sendData(blob);
-
-        // var checks = document.querySelectorAll(".tracks");
-
-        // const checkIndex = event => {
-        //   console.log(Array.from(checks).indexOf(event.target));
-        // };
-
-        // checks.forEach(
-        //   (func = check => {
-        //     check.addEventListener("click", checkIndex);
-        //   })
-        // );
-
-        var newLength = trackArray.unshift(trackContainer); // adds new recording to top of array
-
+        // Adds new recording to top of array so when displayed on page
+        // wavesurfer can identify the correct class name
+        var newLength = trackArray.unshift(trackContainer);
         for (var x = 0; x < trackArray.length; x++) {
           trackTable.appendChild(trackArray[x]);
         }
+
+        // Delete function for tracks: removes the selected div from trackArray
+        // and also removes the audio from the array trackArr
         deleteButton.onclick = e => {
           var evtTgt = e.target;
           evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-
           var index = trackArray.indexOf(evtTgt.parentNode);
-
-          // console.log(index);
-
           if (index === 0) {
             trackArr.shift();
             trackArray.shift();
@@ -160,52 +152,39 @@ function handlerFunction(stream) {
             trackArray.splice(index);
             trackArr.splice(index);
           }
-
-          // console.log(trackArray);
-          // console.log(trackArr);
-          // console.log(trackArray);
         };
 
-        // console.log(blob);
-
+        // Converting the blob data to base64 so axios can post the data to the server
         var reader = new FileReader();
         reader.readAsDataURL(blob);
         reader.onloadend = function() {
           base64data = reader.result;
-          // console.log(base64data);
-          // var stBlob = JSON.stringify(blob);
           trackArr.push({
             name: trackName,
             audio: base64data
           });
         };
 
-        // trackArr.push({ name: trackName, audio: blob });
-
-        // Adds track data to the end of the array
-        // trackArr.push({ name: trackName, audio: base64data });
         var saveBtn = document.getElementById("saveBtn");
 
-        // console.log(project);
-        // console.log(blob);
-
-        // freshGrid;
-
+        // Saving the project functionality
         saveBtn.onclick = e => {
           var lyricsElm = document.getElementById("lyrics");
           var lyricsVal = lyricsElm.value;
           var tabs = document.getElementsByClassName("freshGrid");
-          // console.log(tabs);
+
           var tabVal = [];
+          // Checking if tabs are entered, if not then send an empty string
+          // otherwise on the library page it displays the tab data as undefined
           if (tabs.length === 0) {
             console.log("Tabs are not entered");
-
-            // console.log(tabVal);
+            // Validation: Project title must be entered
             if (project === "") {
               var val = document.getElementById("title-validation");
               console.log("Error need a title");
               val.style.display = "block";
             } else {
+              // axios post request to the projects route
               axios({
                 method: "post",
                 url: "/projects",
@@ -224,18 +203,17 @@ function handlerFunction(stream) {
               })
                 .then(function(response) {
                   console.log("Project Saved");
-                  // Pop up box to say its saved
-                  var popBox = document.getElementById("saveBox");
-                  popBox.style.display = "block";
-                  setTimeout(function() {
-                    popBox.style.display = "none";
-                  }, 2000);
+                  // // Pop up box to say its saved
+                  // var popBox = document.getElementById("saveBox");
+                  // popBox.style.display = "block";
+                  // setTimeout(function () {
+                  //   popBox.style.display = "none";
+                  // }, 2000);
                 })
                 .catch(function(error) {
                   console.log(error);
-
-                  // Put Validation
                 });
+              // Displays box saying project saved
               var popBox = document.getElementById("saveBox");
               popBox.style.display = "block";
               setTimeout(function() {
@@ -243,6 +221,8 @@ function handlerFunction(stream) {
               }, 2000);
             }
           } else {
+            // Send the tab data with the rest of the project
+            // Retrieving the h1 values from the tabs childNodes
             for (var a = 0; a < 6; a++) {
               for (var b = 0; b < 12; b++) {
                 tabVal.push(
@@ -251,7 +231,7 @@ function handlerFunction(stream) {
               }
             }
             var val = document.getElementById("title-validation");
-            // console.log(tabVal);
+            // Validation: Project needs a title
             if (project === "") {
               console.log("Error need a title");
               val.style.display = "block";
@@ -282,6 +262,9 @@ function handlerFunction(stream) {
           // console.log(trackArr);
         };
 
+        // Wavesurfer.js: creates a waveform for the audio
+        // it takes in the audioURL and is assigned to the
+        // element with the class waveform
         var wavesurfer = WaveSurfer.create({
           container: ".waveform",
           waveColor: "#FFFFFF",
@@ -294,50 +277,16 @@ function handlerFunction(stream) {
           cursorWidth: "0",
           interact: "true"
         });
-        // console.log(trackArray);
         wavesurfer.load(audioURL);
 
         var titleDiv = document.getElementById("title-div");
-
         titleDiv.style.display = "inherit";
       }
     };
   };
-
-  // var sendData = blob => {
-  //   var xhr = new XMLHttpRequest();
-  //   xhr.open("POST", "/app", true);
-
-  //   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  //   xhr.onreadystatechange = function() {
-  //     // Call a function when the state changes.
-  //     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-  //       // Request finished. Do processing here.
-  //     }
-  //   };
-  //   xhr.send(trackArray);
-  // };
-  // console.log(trackArray);
 }
 
-// var wavesurfer = WaveSurfer.create({
-//   container: '#waveform'
-// });
-
-var xhr = new XMLHttpRequest();
-xhr.onload = function(e) {
-  if (this.readyState === 4) {
-    console.log("Server returned: ", e.target.responseText);
-  }
-
-  var fd = new FormData();
-  fd.append("name", "filename.wav");
-  fd.append("file", blob);
-  xhr.open("POST", "/projects", true);
-  xhr.send(fd);
-};
-
+// MediaRecorder
 navigator.mediaDevices
   .getUserMedia({
     audio: true
@@ -346,52 +295,17 @@ navigator.mediaDevices
     handlerFunction(stream);
   });
 
-//                       Saving project                   //
-const saveProj = () => {
-  // console.log(trackArr);
-};
-
-// function ClientSide() {
-//   var info = [];
-
-//   info[0] = "hi";
-//   info[1] = "hello";
-
-//   var json = JSON.stringify(info); //pass this
-
-//   $.ajax({
-//     type: "post",
-//     url: "/save",
-//     data: json,
-//     contentType: "application/json; charset=utf-8",
-//     dataType: "json",
-//     success: function(html) {
-//       // use data
-//     }
-
-//   });
-// }
-
-// const sendArr = trackArray => {
-//   var data = "hello";
-//   $.ajax({
-//     type: "POST",
-//     url: "/array",
-//     data: JSON.stringify(data)
-//   });
-// };
-
-// sendArr();
-
+// Tab Creation
 var lastClicked;
-var grid = clickableGrid(6, 12, function(el, row, col, i) {});
+var grid = tabGrid(6, 12, function(el, row, col, i) {});
 var tabDiv = document.getElementById("tab-div");
 tabDiv.appendChild(grid);
 
-function clickableGrid(rows, cols, callback) {
+function tabGrid(rows, cols, callback) {
   var i = 0;
   var grid = document.createElement("table");
   grid.className = "grid";
+  // Creating the grid with cells containing select elements
   for (var r = 0; r < rows; ++r) {
     var tr = grid.appendChild(document.createElement("tr"));
     for (var c = 0; c < cols; ++c) {
@@ -406,13 +320,7 @@ function clickableGrid(rows, cols, callback) {
 
       var selArr = [];
       selArr = select;
-      // console.log(selArr);
-
-      // Creating select options
-
-      // nums.innerHTML = "";
-      // select.appendChild(nums);
-
+      // Creating the values of the select elements
       for (var n = 0; n <= 26; n++) {
         var nums = document.createElement("option");
         nums.setAttribute("class", "nums");
@@ -435,10 +343,11 @@ function clickableGrid(rows, cols, callback) {
         }
       }
 
+      // Saving the tab functionality
       btn.onclick = () => {
         var newTable = document.createElement("table");
         newTable.className = "freshGrid";
-
+        // Creating a new table with cells containing h1 elements
         for (var r = 0, n = grid.rows.length; r < n; r++) {
           var tRow = newTable.appendChild(document.createElement("tr"));
           tRow.setAttribute("class", "tabRow");
@@ -447,7 +356,8 @@ function clickableGrid(rows, cols, callback) {
             tCell.setAttribute("class", "tabCell");
             var h1 = document.createElement("h1");
             h1.setAttribute("class", "tabNums");
-
+            // Setting the value of the h1 by finding the value of the orginal
+            // grid's select elements
             var value = grid.rows[r].cells[c].childNodes[0].childNodes[0].value;
             h1.value = value;
             h1.innerHTML = value;
@@ -455,19 +365,16 @@ function clickableGrid(rows, cols, callback) {
             // console.log(value);
           }
         }
+        // Hides the original grid and displays the new one
         var tabDiv = document.getElementById("tab-div");
         tabDiv.appendChild(newTable);
-
         grid.style.display = "none";
       };
 
       customSelect.appendChild(select);
-      // customSelect.appendChild(btn);
       cell.appendChild(customSelect);
     }
   }
   customSelect.appendChild(btn);
   return grid;
 }
-
-// function GetCellValues() {}
