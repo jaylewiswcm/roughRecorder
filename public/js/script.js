@@ -48,10 +48,12 @@ const closeForm = () => {
 // Functionality to show tabs
 var tabs = document.getElementById("tab-div");
 var tabTitle = document.getElementById("tab-title");
+var helper = document.getElementById("helper-hider");
 const showTabs = () => {
   if (tabs.style.display == "none") {
     tabs.style.display = "inline-block";
     tabTitle.style.cursor = "default";
+    helper.style.display = "none";
   } else {
     tabs.style.display = "none";
     tabTitle.style.cursor = "cell";

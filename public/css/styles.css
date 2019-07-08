@@ -798,6 +798,21 @@ td {
 } 
 */
 
+.tab-helper {
+  padding-left: 170px;
+}
+
+.tab-helper-t {
+  border: 2px white solid;
+  color: white;
+  font-family: 'Magical Mystery Tour';
+  background: #001f3f;
+  border-radius: 45px;
+  width: 230px;
+  padding: 5px;
+
+}
+
 #tab-div {
   display: none;
   margin-top: 40px;
@@ -1716,4 +1731,21 @@ td {
   padding: -2px;
   text-align: center;
   height: 30px;
+}
+
+.aboutCon {
+  margin-left: 100px;
+}
+
+#aboutTitle {
+  font-size: 24px;
+  font-family: "Magical Mystery Tour", "Montserrat", sans-serif;
+  color: white;
+}
+
+#aboutP {
+  width: 550px;
+  font-size: 19px;
+  font-family: "Magical Mystery Tour", "Montserrat", sans-serif;
+  color: white;
 }
