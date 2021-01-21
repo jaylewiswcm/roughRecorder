@@ -26,7 +26,7 @@
     "multer": "^1.4.1",
     "multer-gridfs-storage": "^3.2.3",
     "session": "^0.1.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.2.0",
     "xmlhttprequest": "^1.8.0"
   },
